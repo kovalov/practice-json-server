@@ -1,18 +1,10 @@
-export const Pagination = ({
-  totalItems,
-  numberOfPages,
-  currentPage,
-  setCurrentPage,
-}) => {
+export const Pagination = ({ numberOfPages, currentPage, setCurrentPage }) => {
   const nextPage = () => {
     if (currentPage !== numberOfPages) setCurrentPage(currentPage + 1);
   };
   const prevPage = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
-
-  const isDisabled =
-    currentPage === numberOfPages || currentPage === 1 ? "true" : "false";
 
   return (
     <div className="pagination">

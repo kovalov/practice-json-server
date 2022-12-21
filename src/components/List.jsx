@@ -1,17 +1,11 @@
 import { Pagination } from "./Pagination";
 
-export const List = ({
-  data,
-  totalItems,
-  numberOfPages,
-  currentPage,
-  setCurrentPage,
-}) => {
+export const List = ({ users, numberOfPages, currentPage, setCurrentPage }) => {
   return (
     <main className="main">
       <div className="main__container container">
         <ul className="list">
-          {data.map((item) => (
+          {users.map((item) => (
             <li key={item.id} className="list__item">
               <dl className="inner-list">
                 <div className="inner-list__item">
@@ -27,11 +21,13 @@ export const List = ({
                   <dd className="inner-list__description">{item.phone}</dd>
                 </div>
               </dl>
+              {/* <div className="controls">
+                <button className="controls__button">Delete</button>
+              </div> */}
             </li>
           ))}
         </ul>
         <Pagination
-          totalItems={totalItems}
           numberOfPages={numberOfPages}
           currentPage={currentPage}
           setCurrentPage={setCurrentPage}

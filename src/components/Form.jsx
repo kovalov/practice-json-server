@@ -1,14 +1,14 @@
-// import { useFetch } from "../hooks/useFetch";
-
-export const Form = ({ addData, totalItems }) => {
-  //   const { addData } = useFetch("http://localhost:3000/users");
-
+export const Form = ({ getData, addData, setIsModalOpened }) => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const inputObject = Object.fromEntries(formData);
-
-    await addData({ id: totalItems + 1, ...inputObject });
+    addData(inputObject);
+    getData();
+    // Object.from.forEach((_, key) => {
+    //   formData.delete(key);
+    // });
+    setIsModalOpened(false);
   };
 
   return (

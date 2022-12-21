@@ -7,33 +7,27 @@ export const useFetch = (baseUrl) => {
     const url = `${baseUrl}?_page=${currentPage}&_limit=${itemsPerPage}`;
     setIsLoading(true);
     const response = await fetch(url);
+    const total = Number(response.headers.get("X-Total-Count"));
+    const json = await response.json();
+    setIsLoading(false);
+    return { json, total };
+  };
+
+  const addData = async (data) => {
+    const requestParams = {
+      method: "POST",
+      body: JSON.stringify(data),
+      headers: {
+        "Content-type": "application/json",
+      },
+    };
+
+    setIsLoading(true);
+    const response = await fetch(baseUrl, requestParams);
     const json = await response.json();
     setIsLoading(false);
     return json;
   };
 
-  //   const getAllData = async () => {
-  //     setIsLoading(true);
-  //     const response = await fetch(url);
-  //     const json = await response.json();
-  //     setIsLoading(false);
-  //     return json;
-  //   };
-
-  //   const addData = async (data) => {
-  //     const requestParams = {
-  //       method: "POST",
-  //       body: JSON.stringify(data),
-  //       headers: {
-  //         "Content-type": "application/json; charset=UTF-8",
-  //       },
-  //     };
-
-  //     setIsLoading(true);
-  //     const response = await fetch(url, requestParams);
-  //     await response.json();
-  //     setIsLoading(false);
-  //   };
-
-  return { isLoading, getData };
+  return { isLoading, getData, addData };
 };
