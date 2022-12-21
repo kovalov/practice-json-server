@@ -1,4 +1,5 @@
 import { useState, useEffect } from "react";
+import { useFetch } from "../hooks/useFetch";
 
 import { Header } from "./Header";
 import { Loader } from "./Loader";
@@ -7,25 +8,25 @@ import { Modal } from "./Modal";
 
 export const App = () => {
   const [data, setData] = useState([]);
-  const [isLoading, setIsLoading] = useState(false);
+  //   const [isLoading, setIsLoading] = useState(false);
 
   const [totalItems, setTotalItems] = useState(10);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage, setItemsPerPage] = useState(3);
   const numberOfPages = Math.ceil(totalItems / itemsPerPage);
 
-  const [isModalOpened, setIsModalOpened] = useState(true);
+  const [isModalOpened, setIsModalOpened] = useState(false);
 
-  const url = `https://jsonplaceholder.typicode.com/users?_page=${currentPage}&_limit=${itemsPerPage}`;
+  const url = "http://localhost:3000/users";
+
+  const { isLoading, getData } = useFetch(url);
 
   useEffect(() => {
-    setIsLoading(true);
-    fetch(url)
-      .then((response) => response.json())
-      .then((json) => {
-        setData(json);
-        setIsLoading(false);
-      });
+    async function fetchData() {
+      const json = await getData(currentPage, itemsPerPage);
+      setData(json);
+    }
+    fetchData();
   }, [currentPage]);
 
   return (
@@ -42,7 +43,12 @@ export const App = () => {
           setCurrentPage={setCurrentPage}
         />
       )}
-      <Modal isOpened={isModalOpened} setIsOpened={setIsModalOpened} />
+      {/* <Modal
+        isOpened={isModalOpened}
+        setIsOpened={setIsModalOpened}
+        totalItems={totalItems}
+        addData={addData}
+      /> */}
     </div>
   );
 };
