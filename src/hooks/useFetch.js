@@ -1,29 +1,28 @@
 import { useState } from "react";
 
-export const useFetch = (baseUrl) => {
+export const useFetch = (url) => {
   const [isLoading, setIsLoading] = useState(false);
 
-  const getData = async (currentPage, itemsPerPage) => {
-    const url = `${baseUrl}?_page=${currentPage}&_limit=${itemsPerPage}`;
+  const getData = async () => {
     setIsLoading(true);
     const response = await fetch(url);
+    const data = await response.json();
     const total = Number(response.headers.get("X-Total-Count"));
-    const json = await response.json();
     setIsLoading(false);
-    return { json, total };
+    return { data, total };
   };
 
-  const addData = async (data) => {
+  const addData = async (data, totalItems) => {
     const requestParams = {
       method: "POST",
-      body: JSON.stringify(data),
+      body: JSON.stringify({ ...data, id: totalItems + 1 }),
       headers: {
-        "Content-type": "application/json",
+        "Content-type": "application/json; charset=UTF-8",
       },
     };
 
     setIsLoading(true);
-    const response = await fetch(baseUrl, requestParams);
+    const response = await fetch(url, requestParams);
     const json = await response.json();
     setIsLoading(false);
     return json;

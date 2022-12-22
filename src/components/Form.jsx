@@ -1,13 +1,14 @@
-export const Form = ({ getData, addData, setIsModalOpened }) => {
+export const Form = ({ addData, setIsModalOpened, totalItems }) => {
   const handleSubmitForm = async (e) => {
     e.preventDefault();
     const formData = new FormData(e.target);
     const inputObject = Object.fromEntries(formData);
-    addData(inputObject);
-    getData();
-    // Object.from.forEach((_, key) => {
+    addData(inputObject, totalItems);
+
+    // Object.keys(formData).forEach((_, key) => {
     //   formData.delete(key);
     // });
+    // Object.keys(formData).forEach((_, key) => console.log(key));
     setIsModalOpened(false);
   };
 

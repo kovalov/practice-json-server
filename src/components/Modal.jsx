@@ -1,6 +1,6 @@
 import { Form } from "./Form";
 
-export const Modal = ({ isOpened, setIsOpened, addData, getData }) => {
+export const Modal = ({ isOpened, setIsOpened, addData, totalItems }) => {
   const showHiddenClassList = isOpened ? "modal" : "modal hidden";
 
   const handleClose = () => setIsOpened(false);
@@ -10,7 +10,7 @@ export const Modal = ({ isOpened, setIsOpened, addData, getData }) => {
       <div onClick={(e) => e.stopPropagation()} className="modal__content">
         <Form
           addData={addData}
-          getData={getData}
+          totalItems={totalItems}
           setIsModalOpened={setIsOpened}
         />
       </div>
